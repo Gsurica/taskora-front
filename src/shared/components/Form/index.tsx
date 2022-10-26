@@ -1,8 +1,10 @@
-import { Button, Container, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Link, Stack, Text, VStack } from "@chakra-ui/react"
+import { Alert, AlertIcon, Button, Container, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Link, Stack, Text, VStack } from "@chakra-ui/react"
 import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { createNewUser } from "../../../services/mutations/userMutations/createUserMutation"
-
+import { loginuserMutation } from "../../../services/mutations/userMutations/loginUserMutation"
+import { saveOnLocalStorage } from "../../functions/saveOnLocalStorage"
+import { useNavigate } from "react-router-dom"
 
 interface FormProps {
   login?: boolean
@@ -12,6 +14,8 @@ interface FormProps {
 export const Forms: React.FC<FormProps> = ({ login, register }) => {
 
   const { mutate: createUser } = createNewUser()
+
+  const redirect = useNavigate()
  
   const formik = useFormik({
     initialValues: {
@@ -77,8 +81,32 @@ export const Forms: React.FC<FormProps> = ({ login, register }) => {
   }
 
   if (login) {
+
+    const { mutate: loginUser, data, isSuccess} = loginuserMutation()
+
+    if (isSuccess) {
+
+      const token = data.token
+
+      saveOnLocalStorage('token', token)
+
+      redirect(`/home/${data.user.id}/${data.user.level}/${data.user.exp}`)
+      
+      return (
+
+        <>
+          <Alert status="success">
+            <AlertIcon />
+            Usuário logado com sucesso! manda ver!
+          </Alert>
+          <Forms login/>
+        </>
+      )
+    }
+
     return (
       <Container marginTop={"50"}>
+
         <form onSubmit={formik.handleSubmit}>
           <Stack spacing={4} bg="900" padding="4" borderRadius="lg">
 
@@ -105,6 +133,9 @@ export const Forms: React.FC<FormProps> = ({ login, register }) => {
                 background:"700",
                 color: "white",
               }
+            } onClick={() => {
+              loginUser({ username: formik.values.username, password: formik.values.password })
+            }
             }>
               Logar
             </Button>

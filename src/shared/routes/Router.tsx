@@ -9,7 +9,8 @@ export const Router = () => {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/home" element={ <Home /> } />
+        <Route path="/" element={ <Navigate to="/login" /> } />
+        <Route path="/home/:userId/:userLevel/:userExp" element={ <Home /> } />
         <Route path="/register" element={ <Register /> } />
         <Route path="/login" element={ <Login /> } />
       </Routes>
