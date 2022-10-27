@@ -10,3 +10,14 @@ export interface IUser {
     username: string 
   }
 }
+
+export interface IOnlyUserTypes {
+  id: string
+  avatar: string | null 
+  email: string 
+  exp: number
+  level: number 
+  missions: string[]
+  password: string 
+  username: string 
+}

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Navigate, Route } from "react-router-dom"
 import { Home } from "../../pages/Home/Home"
 import { Register } from "../../pages/register/Register"
 import { Login } from "../../pages/login/Login"
-import Header from "../components/Header/Header"
+import { Header } from "../components/Header/Header"
 
 export const Router = () => {
   return (

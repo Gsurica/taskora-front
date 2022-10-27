@@ -1,12 +1,8 @@
 import { Avatar, AvatarBadge, Box, Flex, Heading, Spacer, Text, transition, Wrap } from "@chakra-ui/react";
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { FunctionComponent } from "react";
 
-interface HeaderProps {
-  
-}
- 
-const Header: FunctionComponent<HeaderProps> = () => {
+export const Header = () => {
+
   return (
     <Flex as="div" bg="#E9D8FD" alignItems="center" boxShadow="md">
       <Spacer />
@@ -29,8 +25,8 @@ const Header: FunctionComponent<HeaderProps> = () => {
       <Spacer />
       <Box>
         <Box as="button">
-          <Avatar width="120">
-            <AvatarBadge boxSize="5" bg="green" />
+          <Avatar>
+            <AvatarBadge />
           </Avatar>
         </Box>
       </Box>
@@ -38,5 +34,3 @@ const Header: FunctionComponent<HeaderProps> = () => {
     </Flex>
   );
 }
- 
-export default Header;
