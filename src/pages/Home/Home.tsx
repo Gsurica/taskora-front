@@ -1,32 +1,28 @@
-import { Box, Container, Flex, Spinner, Text } from "@chakra-ui/react";
-import axios from "axios";
+import { Container, Flex, Spinner, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
-import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { IOnlyUserTypes } from "../../services/userFetching/userTypes";
+import { Mission } from "../../shared/components/missions/Mission";
+import { ModalContent } from "../../shared/components/Modal/Modal";
 import { getTokenOnLocalStorage } from "../../shared/functions/getTokenOnLocalStorage";
+import { useFetch } from "../../shared/functions/useFetch";
 
 export const Home: FunctionComponent= () => {
 
   const { userId } = useParams()
   const token = getTokenOnLocalStorage('token')?.token
 
-  const { data, isLoading } = useQuery<IOnlyUserTypes>('user', async () => {
-    const response = await axios.get(`http://localhost:3333/user/${userId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': 'Bearer ' + token,
-      }
-    })
-    return response.data
-  })
+  const { data, isLoading } = useFetch<IOnlyUserTypes>('user', `http://localhost:3333/user/${userId}`, token)
+
+  console.log(data)
 
   return (
-    <Container padding={3} >
+    <Container padding={3}>
       { isLoading && (
         <Spinner />
       ) }
       <Flex justifyContent="center" alignItems="center" flexDirection="column">
+        <ModalContent />
         <Text>Bem-vindo!</Text>
         <Text 
         fontSize="24" 
@@ -90,6 +86,11 @@ export const Home: FunctionComponent= () => {
           marginTop="2"
           >Exp</Text>
         </Flex>
+      </Flex>
+      <Flex
+      marginTop={5}
+      >
+        <Mission />
       </Flex>
     </Container>
   );

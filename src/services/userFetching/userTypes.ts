@@ -1,3 +1,5 @@
+import { IMission } from "../../interfaces/MissionInterfaces/IMisison"
+
 export interface IUser {
   token: string
   user: {
@@ -17,7 +19,7 @@ export interface IOnlyUserTypes {
   email: string 
   exp: number
   level: number 
-  missions: string[]
+  missions: IMission[]
   password: string 
   username: string 
 }
